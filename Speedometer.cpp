@@ -35,7 +35,7 @@ void Speedometer :: runSpeedometer() {
   static int32_t revolutions = 0; /* current tire revolutions */
   static int32_t prevLight = 0; /* last valid light reading */
   int32_t currLight = 0; //analogRead( _SensorPin ); /* current light reading */
-  double Z_Score = 0            /* current light standing */
+  double Z_Score = 0;            /* current light standing */
   
   /* Noise control -- avoid currLight to bounce between two adjacent values */
 
@@ -57,7 +57,7 @@ void Speedometer :: runSpeedometer() {
     revolutions++;
     inPeak = true;
   }
-  else if( inPeak == true && Z_Score <= theshold ) {
+  else if( inPeak == true && Z_Score <= threshold ) {
     /* end of light peak -- ready for the next revolution */
     inPeak = false;
   }
