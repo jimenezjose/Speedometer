@@ -17,7 +17,7 @@ class Speedometer {
 
   private:
     void resetData( void );
-    bool populateData( uint32_t sampleSize );
+    bool populateData( void );
     double calcMean( void );
     double calcStanDev( double sampleMean );
 
