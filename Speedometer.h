@@ -1,12 +1,13 @@
 #ifndef SPEEDOMETER_H
 #define SPEEDOMETER_H
 
-//#include <Arduino.h>
+#include <Arduino.h>
 #include <inttypes.h>
 
 #define SPEEDOMETER_SAMPLE_SIZE 100
 #define NOISE_DEVIATION 1
 #define SPEEDOMETER_DEFAULT_THRESHOLD 0.1
+#define SPEEDOMETER_MAX_TIME 1000
 
 class Speedometer {
 
@@ -15,6 +16,15 @@ class Speedometer {
 
     void task( void );
     void calibrate( void );
+
+    int32_t getRPM( void );
+    int32_t getMaxRPM( void );
+    double getThreshold( void );
+
+    double getMean( void );
+    double getStanDev( void );
+
+    void setThreshold( double newThreshold );
 
   private:
     void resetData( void );
@@ -26,15 +36,16 @@ class Speedometer {
     const int8_t _SensorPin;
     const int8_t _LedPin;
 
-    int32_t data[ SPEEDOMETER_SAMPLE_SIZE ];
-    int32_t dataIndex;
+    int16_t data[ SPEEDOMETER_SAMPLE_SIZE ];
+    int16_t dataIndex;
     double stanDev;
     double mean;
 
-    uint64_t previousMillis; 
+    uint32_t previousMillis; 
+    uint32_t totalRevs;
     double threshold;
-    int64_t maxRPM;
-    int64_t rpm;
+    int32_t maxRPM;
+    int32_t rpm;
 
 };
 

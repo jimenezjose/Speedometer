@@ -1,0 +1,31 @@
+#######################################
+# Syntax Coloring For L298N Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Speedometer	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+task	KEYWORD2
+calibrate	KEYWORD2
+
+setThreshold	KEYWORD2
+
+getRPM	KEYWORD2
+getMaxRPM	KEYWORD2
+getThreshold	KEYWORD2
+getMean	KEYWORD2
+getStanDev	KEYWORD2
+
+######################################
+# Constants (LITERAL1)
+#######################################
+
+NOISE_DEVIATION	LITERAL1
+
