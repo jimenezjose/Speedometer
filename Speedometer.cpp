@@ -92,8 +92,8 @@ void Speedometer :: runSpeedometer() {
 
   uint32_t currentMillis = millis(); 
 
-  if( revolutions ) {
-    /* calculate current rpm */
+  if( revolutions || currentMillis - previousMillis > 7500 ) {
+    /* calculate current rpm -- time interupt of 7.5 seconds*/
     double dt = currentMillis - previousMillis;
     dt = dt * (1.0 / 1000) * (1.0 / 60);
     rpm = revolutions / dt;
@@ -106,12 +106,6 @@ void Speedometer :: runSpeedometer() {
     }
 
   }
-  else if( currentMillis - previousMillis >  60000 ) {
-    /* time interupt - rpm will be registered as 0 - max time */
-    previousMillis = currentMillis;
-    revolutions = 0;
-    rpm = 0;
-  }
 
   Serial.print( totalRevs );
   Serial.print( "\t" );
@@ -120,6 +114,8 @@ void Speedometer :: runSpeedometer() {
   Serial.print( mean + threshold * stanDev );
   Serial.print( "\t" );
   Serial.println( rpm );
+  //Serial.print( "\t" );
+  //Serial.println( currentMillis - previousMillis );
 
 }
 
@@ -160,7 +156,7 @@ bool Speedometer :: populateData() {
   uint8_t sampleSize = SPEEDOMETER_SAMPLE_SIZE;
   uint32_t currentMillis = millis();
   
-  if( currentMillis - previousMillis > 50 ) {
+  if( currentMillis - previousMillis > 75 ) {
     /* delay implemented to emulate a random sample */
     previousMillis = currentMillis;
     dataIndex = dataIndex % sampleSize; /* wrap overloaded index */
