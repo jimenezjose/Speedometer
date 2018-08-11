@@ -95,7 +95,7 @@ void Speedometer :: runSpeedometer() {
   if( revolutions ) {
     /* calculate current rpm */
     double dt = currentMillis - previousMillis;
-    dt = dt * (1.0 / 1000); //* (1.0 / 60); TODO currently rps
+    dt = dt * (1.0 / 1000) * (1.0 / 60);
     rpm = revolutions / dt;
     /* reset deltas */
     previousMillis = currentMillis; 
@@ -106,22 +106,20 @@ void Speedometer :: runSpeedometer() {
     }
 
   }
-  else if( currentMillis - previousMillis >  1000 /* *60 */ ) {
+  else if( currentMillis - previousMillis >  60000 ) {
     /* time interupt - rpm will be registered as 0 - max time */
     previousMillis = currentMillis;
     revolutions = 0;
     rpm = 0;
   }
 
-  /*
   Serial.print( totalRevs );
   Serial.print( "\t" );
   Serial.print( currLight );
   Serial.print( "\t" );
   Serial.print( mean + threshold * stanDev );
   Serial.print( "\t" );
-  Serial.println( stanDev );
-  */
+  Serial.println( rpm );
 
 }
 
@@ -231,6 +229,17 @@ void Speedometer :: resetData() {
   previousMillis = millis(); 
   totalRevs = 0;
   maxRPM = 0;
+}
+
+/***************************************************************************
+% Routine Name : isCalibrating
+% File :         Speedometer.cpp 
+% Parameters:    None
+% Description :  sample set is currently being collected. 
+% Return:        true - sample is being collected. false - otherwise.
+***************************************************************************/
+bool Speedometer :: isCalibrating() {
+  return dataIndex != SPEEDOMETER_SAMPLE_SIZE;
 }
 
 /***************************************************************************

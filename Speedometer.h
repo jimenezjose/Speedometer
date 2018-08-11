@@ -17,6 +17,8 @@ class Speedometer {
     void task( void );
     void calibrate( void );
 
+    bool isCalibrating( void );
+
     int32_t getRPM( void );
     int32_t getMaxRPM( void );
     double getThreshold( void );
